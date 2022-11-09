@@ -84,6 +84,7 @@ function generateBoard() {
     }
 }
 
+let timeout;
 function tileClick(tileId, tileValue) {
     let clickedTile = document.getElementById(`tile${tileId}`);
     if(!clickedTile.classList.contains('flipped') && !clickedTile.classList.contains('found')) {
@@ -96,7 +97,11 @@ function tileClick(tileId, tileValue) {
             secondTileValue = tileValue;
             flipTile(tileId, tileValue);
             // make ternary
-            if(firstTileValue == secondTileValue) { matchFound(); } else { matchNotFound(); }
+            if(firstTileValue == secondTileValue) { 
+                matchFound(); 
+            } else { 
+                timeout = setTimeout(matchNotFound,3000); 
+            }
         }
     }
     

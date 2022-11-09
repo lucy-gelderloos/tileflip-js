@@ -7,7 +7,12 @@
 //   - Script for handling reset if no match is found
 //   - Script for handling match found (reset, send image to discard pile)
 
-let difficulty, allTiles, tilesClicked = 0, currentValue = 0, firstTileId, firstTileValue, secondTileId, secondTileValue;
+let difficulty, allTiles, tilesClicked = 0, currentValue = 0, firstTileId = 0, firstTileValue = 0, secondTileId = 0, secondTileValue = 0;
+
+const info = document.getElementById('clickTracker');
+function tracker() {
+    info.textContent = `firstTileId: ${firstTileId}; firstTileValue: ${firstTileValue}; secondTileId: ${secondTileId}; secondTileValue: ${secondTileValue}`;
+}
 
 function selectDifficulty(event) {
     event.preventDefault();
@@ -35,7 +40,6 @@ class Tile {
 Tile.allTiles = [];
 
 function generateTiles(difficulty) {
-    difficulty = 16;
     let tilesArray = [], k = 0;
     for(let i = 1; i <= difficulty / 2; i++) {
         tilesArray[k] = i;
@@ -53,7 +57,7 @@ function generateTiles(difficulty) {
         tilesArray[j] = t;
     }
 
-    for(let i = 0; i < tilesArray.length; i++) {
+    for(let i = 1; i <= tilesArray.length; i++) {
         new Tile(i, tilesArray[i]);
     }
 }
@@ -81,37 +85,62 @@ function generateBoard() {
 }
 
 function tileClick(tileId, tileValue) {
-    // sets the image of the current tile to the front image
-    if(!firstTileId) {
+    if(firstTileId == 0) {
         firstTileId = tileId;
         firstTileValue = tileValue;
-    } else if(!secondTileId) {
+        flipTile(tileId, tileValue);
+    } else if(secondTileId == 0) {
         secondTileId = tileId;
         secondTileValue = tileValue;
+        flipTile(tileId, tileValue);
+        // make ternary
+        if(firstTileValue == secondTileValue) { matchFound(); } else { matchNotFound(); }
     }
-    // maybe make this a separate (toggle?) function that gets called depending on the status of firstTileId/secondTileId - don't want to be able to flip over more than two tiles at a time
-    let clickedTile = document.getElementById(tileId);
-    clickedTile.removeChild(clickedTile.firstChild);
-    let frontImg = document.createElement('img');
-    frontImg.src = `./img/tileFaces/${tileValue}.png`;
-    frontImg.alt = `${tileValue}`;
-    clickedTile.appendChild(frontImg);
+    tracker();
+    // if both firstTileId and secondTileId have a property, this should do nothing
+}
+
+function flipTile(tileId, tileValue) {
+    let clickedTile = document.getElementById(`tile${tileId}`);
+    clickedTile.classList.add('flipped');
+    console.log('flipTile clickedTile',clickedTile);
+    let tileImg = clickedTile.getElementsByTagName('img')[0];
+    tileImg.src = `./img/tileFaces/tile${tileValue}.png`;
+    tileImg.alt = `Tile ${tileValue}`;
 }
 
 function matchFound() {
-    let firstTile = document.getElementById(firstTileId);
+    // put a delay here so the tiles don't instantly disappear
+    let firstTile = document.getElementById(`tile${firstTileId}`);
     firstTile.removeChild(firstTile.firstChild);
-    let secondTile = document.getElementById(secondTileId);
+    let secondTile = document.getElementById(`tile${secondTileId}`);
     secondTile.removeChild(secondTile.firstChild);
+
+    reset();
 }
 
 function matchNotFound() {
-  // when a match is not found, 
+    console.log('successfully called matchNotFound');
+    let tiles = tileBoard.children;
+    console.log('matchNotFound tiles',tiles);
+    for(let i = 0; i < tiles.length; i++) {
+        let tile = tiles[i];
+        console.log('matchNotFound tile',tile);
+        if(tile.classList.contains('flipped')) {
+            let tileImg = tile.getElementsByTagName('img')[0];
+            console.log('matchNotFound tileImg',tileImg);
+            tileImg.src = `./img/tileback.png`;
+            tileImg.alt = `Tile ${tile.tileId} Back`;
+        }
+    }
+
+    reset();
 }
 
 function reset() {
-    firstTileId = null;
-    firstTileValue = null;
-    secondTileId = null;
-    secondTileValue = null;
+    firstTileId = 0;
+    firstTileValue = 0;
+    secondTileId = 0;
+    secondTileValue = 0;
+    tracker();
 }

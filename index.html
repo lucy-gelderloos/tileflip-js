@@ -12,7 +12,15 @@
     </header>
     <main>
       <p id="clickTracker"></p>
-        <form id="selectDifficultyForm"></form>
+        <form id="selectDifficultyForm">
+          <label for="selectDifficulty">Select Difficulty</label>
+          <select name="difficulty" id="selectDifficultyDropdown">
+            <option value="8">Easy</option>
+            <option value="16">Medium</option>
+            <option value="32">Hard</option>
+          </select>
+          <input type="submit" value="Submit" />
+        </form>
 
 
         <button id="newGameBtn">New Game</button>

@@ -2,29 +2,33 @@
 
 // Needs:
 //   - Form to select difficulty
-//   - Button for new game (creates tiles)
-//   - Click handler for tiles to change image
-//   - Script for handling reset if no match is found
-//   - Script for handling match found (reset, send image to discard pile)
+//   x Button for new game (creates tiles)
+//   x Click handler for tiles to change image
+//   x Script for handling reset if no match is found
+//   x Script for handling match found
+//   - Script for sending found matches to discard pile
+//   - Attempt counter
 
-let difficulty, allTiles, tilesClicked = 0, currentValue = 0, firstTileId = 0, firstTileValue = 0, secondTileId = 0, secondTileValue = 0;
+let difficulty, allTiles, tilesClicked = 0, firstTileId = 0, firstTileValue = 0, secondTileId = 0, secondTileValue = 0;
 
 const info = document.getElementById('clickTracker');
 function tracker() {
     info.textContent = `firstTileId: ${firstTileId}; firstTileValue: ${firstTileValue}; secondTileId: ${secondTileId}; secondTileValue: ${secondTileValue}`;
 }
 
-function selectDifficulty(event) {
-    event.preventDefault();
-}
+const difficultySelect = document.getElementById('selectDifficultyDropdown');
+difficultySelect.addEventListener('change',function(event) {
+    difficulty = event.target.value;
+    console.log('difficultySelect change listener event.target.value',event.target.value);
+    console.log('difficultySelect difficulty',difficulty);
+});
 
 const newGameBtn = document.getElementById('newGameBtn');
 newGameBtn.addEventListener('click',startNewGame)
 
 function startNewGame(event) {
     event.preventDefault();
-    // TODO: this should pull difficulty from the form
-    generateTiles(16);
+    generateTiles(difficulty);
     generateBoard();
 }
 
@@ -96,7 +100,7 @@ function tileClick(tileId, tileValue) {
             secondTileId = tileId;
             secondTileValue = tileValue;
             flipTile(tileId, tileValue);
-            // make ternary
+            // TODO: make ternary
             if(firstTileValue == secondTileValue) { 
                 matchFound(); 
             } else { 
@@ -117,7 +121,7 @@ function flipTile(tileId, tileValue) {
 }
 
 function matchFound() {
-    // put a delay here so the tiles don't instantly disappear
+    // TODO: is there a way to do this more efficiently?
     let firstTile = document.getElementById(`tile${firstTileId}`);
     firstTile.classList.replace('flipped','found');
     let firstTileImg = firstTile.getElementsByTagName('img')[0];

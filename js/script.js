@@ -1,20 +1,5 @@
 'use strict';
 
-// Needs:
-//   x Form to select difficulty
-//   x Button for new game (creates tiles)
-//   x Click handler for tiles to change image
-//   x Script for handling reset if no match is found
-//   x Script for handling match found
-//   x Script for sending found matches to discard pile
-//   x Attempt/score counter
-
-// For the flip animation, need:
-// - a container div ('tile')
-// - a flipper div ('flipper')
-// - a front div ('front')
-// - a back div ('back')
-
 const info = document.getElementById('clickTracker');
 const difficultySelect = document.getElementById('selectDifficultyDropdown');
 const newGameBtn = document.getElementById('newGameBtn');
@@ -31,7 +16,7 @@ difficultySelect.addEventListener('change',function(event) {
 newGameBtn.addEventListener('click',startNewGame)
 
 function tracker() {
-    info.textContent = `firstTileId: ${firstTileId}; firstTileValue: ${firstTileValue}; secondTileId: ${secondTileId}; secondTileValue: ${secondTileValue}; attempts: ${attempts}`;
+    info.textContent = `attempts: ${attempts}`;
 }
 
 function startNewGame(event) {

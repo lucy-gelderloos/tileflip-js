@@ -84,13 +84,12 @@ footer {
 /* https://davidwalsh.name/css-flip */
 /* TODO: webkit prefixes */
 .tile {
-    background-color: var(--crimson);
+    /* background-color: var(--crimson); */
     padding: 5px;
     margin: 5px;
-    box-shadow: 2px 2px 4px black;
     perspective: 1000px;
 }
-  
+
 .tile.flipped .flipper {
     transform: rotateY(180deg);
 }
@@ -111,6 +110,7 @@ footer {
     position: absolute;
     top: 0;
     left: 0;
+    box-shadow: 2px 2px 4px black;
 }
   
 .front {

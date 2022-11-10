@@ -1,15 +1,31 @@
 @import "reset.css";
 
 :root {
-    --yellow: #FFCC03;
+    --pageColor: #FFCC03; /* header, footer */
+    --pageText: #181300; /* header & footer text */
+    --tileBoardColor: #5593F2;
+    --tileBoardAccentLight: #7ba4e0;
+    --settingsColor: #51B5E8;
+    --settingsText: #122934;
+    --settingsAccentLight: #8bc6e4;
+    --scoreBoardColor: #8F51E8;
+    --scoreboardAccentLight: #ba9de2;
+    --discardPileColor: #6A55F2;
+    --discardPileAccentLight: #a195f0;
+    --periwinkle: #5869DB;
     --orange: #F27405; 
     --scarlet: #C82600;
     --magenta: #E63964;
     --crimson: #BB263C;
-  }
+    --tileWidth: 75px;
+    --tileHeight: 100px;
+    --boardShadowSize: 2px 2px 0 2px;
+    --grayShadow: 7px 7px 5px #ccc;
+}
 
 body {
     font-family: 'Lato', sans-serif;
+    color: var(--pageText);
 }
 
 h1 {
@@ -24,7 +40,7 @@ h2 {
 
 header {
     width: 100%;
-    background-color: var(--crimson);
+    background-color: var(--pageColor);
 }
 
 main {
@@ -39,32 +55,43 @@ main {
      "tileBoard discardPile";
 }
 
+main > * {
+    border-radius: 5px;
+    margin: 15px;
+
+}
+
 footer {
     width: 100%;
-    background-color: var(--scarlet);
+    background-color: var(--pageColor);
 }
 
 #tileBoard {
     min-width: 500px;
-    background-color: var(--yellow);
+    background-color: var(--tileBoardColor);
+    box-shadow: var(--boardShadowSize) var(--tileBoardAccentLight), var(--grayShadow);
+
     grid-area: tileBoard;
     display: grid;
     justify-items: center;
 }
 
 #gameSettings {
-    background-color: var(--magenta);
+    background-color: var(--settingsColor);
+    box-shadow: var(--boardShadowSize) var(--settingsAccentLight), var(--grayShadow);
 }
 
 #scoreboard {
     min-width: 100px;
-    background-color: var(--orange);
+    background-color: var(--scoreBoardColor);
+    box-shadow: var(--boardShadowSize) var(--scoreboardAccentLight), var(--grayShadow);
     grid-area: scoreboard;
 }
 
 #discardPile {
     min-width: 100px;
-    background-color: var(--magenta);
+    background-color: var(--discardPileColor);
+    box-shadow: var(--boardShadowSize) var(--discardPileAccentLight), var(--grayShadow);
     grid-area: discardPile;
 }
 
@@ -97,8 +124,8 @@ footer {
 }
 
 .tile, .front, .back {
-    width: 75px;
-    height: 100px;
+    width: var(--tileWidth);
+    height: var(--tileHeight);
 }
 
 .flipper {
@@ -125,6 +152,5 @@ footer {
 }
 
 .tileImg {
-    /* object-fit: fill; */
-    width: 75px;
+    width: var(--tileWidth);
 }

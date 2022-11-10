@@ -1,7 +1,7 @@
 'use strict';
 
 // Needs:
-//   - Form to select difficulty
+//   x Form to select difficulty
 //   x Button for new game (creates tiles)
 //   x Click handler for tiles to change image
 //   x Script for handling reset if no match is found
@@ -44,6 +44,7 @@ class Tile {
 Tile.allTiles = [];
 
 function generateTiles(difficulty) {
+    if(!difficulty) { difficulty = 16; }
     let tilesArray = [], k = 0;
     for(let i = 1; i <= difficulty / 2; i++) {
         tilesArray[k] = i;
@@ -61,6 +62,7 @@ function generateTiles(difficulty) {
         tilesArray[j] = t;
     }
 
+    Tile.allTiles = [];
     for(let i = 1; i <= tilesArray.length; i++) {
         new Tile(i, tilesArray[i - 1]);
     }

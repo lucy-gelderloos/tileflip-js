@@ -87,4 +87,5 @@ footer {
     background-color: var(--crimson);
     padding: 5px;
     margin: 5px;
+    box-shadow: 2px 2px 4px black;
 }

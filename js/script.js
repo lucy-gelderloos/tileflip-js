@@ -78,14 +78,11 @@ function generateBoard() {
     }
 
     tileBoard.classList.add(`d${difficulty}`);
-    
+
     for(let i = 0; i < Tile.allTiles.length; i++) {
         let tileDiv = document.createElement('div');
         tileDiv.id = `tile${Tile.allTiles[i].tileId}`;
-        // keep an eye on this, since there will be overlap between ids and classes
-        // tileDiv.className = `tile${Tile.allTiles[i].tileValue}`;
         tileDiv.className = 'tile';
-        // tileDiv.textContent = `Tile: ${Tile.allTiles[i].tileId}; Value: ${Tile.allTiles[i].tileValue}`;
         tileDiv.addEventListener('click', function(){ tileClick(Tile.allTiles[i].tileId, Tile.allTiles[i].tileValue); });
 
         let tileImg = document.createElement('img');
@@ -122,7 +119,7 @@ function tileClick(tileId, tileValue) {
             attempts++;
             // TODO: make ternary
             if(firstTileValue == secondTileValue) { 
-                setTimeout(matchFound(),500); 
+                setTimeout(matchFound,500); 
             } else { 
                 setTimeout(matchNotFound,1500);  
             }

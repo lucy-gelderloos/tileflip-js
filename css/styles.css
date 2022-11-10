@@ -82,9 +82,8 @@ footer {
 }
 
 /* https://davidwalsh.name/css-flip */
+/* TODO: webkit prefixes */
 .tile {
-    /* width: 100px; */
-    /* height: 140px; */
     background-color: var(--crimson);
     padding: 5px;
     margin: 5px;

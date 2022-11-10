@@ -94,6 +94,8 @@ function generateBoard() {
         let tileFlipper = document.createElement('div');
         tileFlipper.className = 'flipper';
 
+        // TODO: try getting rid of this last leve of divs and putting the 'front' and 'back' classes on the images
+        // note that the element with the 'front' class will display by default and the element with the 'back' class will display on click, so for this use, the back of the tile should have the 'front' class and vice versa
         let tileFront = document.createElement('div');
         tileFront.className = 'back';
         
@@ -154,9 +156,6 @@ function tileClick(tileId, tileValue) {
 function flipTile(tileId, tileValue) {
     let clickedTile = document.getElementById(`tile${tileId}`);
     clickedTile.classList.add('flipped');
-    // let tileImg = clickedTile.getElementsByTagName('img')[0];
-    // tileImg.src = `./img/tileFaces/tile${tileValue}.png`;
-    // tileImg.alt = `Tile ${tileValue}`;
 }
 
 function matchFound() {
@@ -191,15 +190,9 @@ function matchFound() {
 
 function matchNotFound() {
     let firstTile = document.getElementById(`tile${firstTileId}`);
-    // let firstTileImg = firstTile.getElementsByTagName('img')[0];
-    // firstTileImg.src = `./img/tileback.png`;
-    // firstTileImg.alt = `Tile ${firstTileId} Back`;
     firstTile.classList.remove('flipped');
     
     let secondTile = document.getElementById(`tile${secondTileId}`);
-    // let secondTileImg = secondTile.getElementsByTagName('img')[0];
-    // secondTileImg.src = `./img/tileback.png`;
-    // secondTileImg.alt = `Tile ${secondTileId} Back`;
     secondTile.classList.remove('flipped');
 
     reset();

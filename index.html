@@ -4,35 +4,39 @@
     <meta charset="utf-8">
     <title>Tile Flip</title>
     <link rel="stylesheet" href="./css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
   </head>
   <body>
     <header>
         <h1>Tile Flip</h1>
     </header>
     <main>
-      <p id="clickTracker"></p>
-      <form id="selectDifficultyForm">
-        <label for="selectDifficulty">Select Difficulty</label>
-        <select name="difficulty" id="selectDifficultyDropdown">
-          <option value="8">Easy</option>
-          <option value="16">Medium</option>
-          <option value="32">Hard</option>
-        </select>
-      </form>
-      <button id="newGameBtn">New Game</button>
       <div id="tileBoard">
         <h2>Tile Board</h2>
       </div>
+      <div id="gameSettings">
+        <p id="clickTracker"></p>
+        <form id="selectDifficultyForm">
+          <label for="selectDifficulty">Select Difficulty</label>
+          <select name="difficulty" id="selectDifficultyDropdown">
+            <option value="8">Easy</option>
+            <option value="16">Medium</option>
+            <option value="36">Hard</option>
+          </select>
+        </form>
+        <button id="newGameBtn">New Game</button>
+      </div>
       <div id="scoreboard">
         <h2>Scoreboard</h2>
-        <!-- <img src='./img/matchfound.png' alt="empty discard pile" /> -->
       </div>
       <div id="discardPile">
         <h2>Discard Pile</h2>
       </div>
     </main>
     <footer>
-
+      <h3>Lucy Gelderloos</h3>
     </footer>
     <script src="./js/script.js"></script>
   </body>

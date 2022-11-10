@@ -9,7 +9,7 @@
 //   x Script for sending found matches to discard pile
 //   - Attempt/score counter
 
-let difficulty, allTiles, tilesClicked = 0, firstTileId = 0, firstTileValue = 0, secondTileId = 0, secondTileValue = 0, attempts;
+let difficulty, allTiles, tilesClicked = 0, firstTileId = 0, firstTileValue = 0, secondTileId = 0, secondTileValue = 0, attempts, tilesLeft;
 
 const info = document.getElementById('clickTracker');
 function tracker() {
@@ -47,6 +47,7 @@ Tile.allTiles = [];
 function generateTiles(difficulty) {
     // TODO: make ternary
     if(!difficulty) { difficulty = 16; }
+    tilesLeft = difficulty / 2;
     let tilesArray = [], k = 0;
     for(let i = 1; i <= difficulty / 2; i++) {
         tilesArray[k] = i;
@@ -79,8 +80,9 @@ function generateBoard() {
         let tileDiv = document.createElement('div');
         tileDiv.id = `tile${Tile.allTiles[i].tileId}`;
         // keep an eye on this, since there will be overlap between ids and classes
-        tileDiv.className = `tile${Tile.allTiles[i].tileValue}`;
-        tileDiv.textContent = `Tile: ${Tile.allTiles[i].tileId}; Value: ${Tile.allTiles[i].tileValue}`;
+        // tileDiv.className = `tile${Tile.allTiles[i].tileValue}`;
+        tileDiv.className = 'tile';
+        // tileDiv.textContent = `Tile: ${Tile.allTiles[i].tileId}; Value: ${Tile.allTiles[i].tileValue}`;
         tileDiv.addEventListener('click', function(){ tileClick(Tile.allTiles[i].tileId, Tile.allTiles[i].tileValue); });
 
         let tileImg = document.createElement('img');
@@ -119,7 +121,7 @@ function tileClick(tileId, tileValue) {
             if(firstTileValue == secondTileValue) { 
                 matchFound(); 
             } else { 
-                setTimeout(matchNotFound,3000);  
+                setTimeout(matchNotFound,2000);  
             }
         }
     }    
@@ -151,6 +153,11 @@ function matchFound() {
     let discardImg = discardPile.getElementsByTagName('img')[0];
     discardImg.src = `./img/tileFaces/tile${firstTileValue}.png`;
     discardImg.alt = 'Discard Pile';
+
+    tilesLeft--;
+    if(tilesLeft == 0) {
+        alert(`All matches found in ${attempts} tries!`);
+    }
 
     reset();
 }

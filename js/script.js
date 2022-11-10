@@ -7,7 +7,7 @@ const tileBoard = document.getElementById('tileBoard');
 const scoreboard = document.getElementById('scoreboard');
 const discardPile = document.getElementById('discardPile');
 
-let difficulty, allTiles, tilesClicked = 0, firstTileId = 0, firstTileValue = 0, secondTileId = 0, secondTileValue = 0, attempts, tilesLeft;
+let difficulty, allTiles, firstTileId = 0, firstTileValue = 0, secondTileId = 0, secondTileValue = 0, attempts, tilesLeft;
 
 difficultySelect.addEventListener('change',function(event) {
     difficulty = event.target.value;
@@ -87,6 +87,7 @@ function generateBoard() {
         let tileImg = document.createElement('img');
         tileImg.src = `./img/tileFaces/tile${Tile.allTiles[i].tileValue}.png`;
         tileImg.alt = `Tile value: ${Tile.allTiles[i].tileValue}`;
+        tileImg.className = 'tileImg';
 
         let tileBack = document.createElement('div');
         tileBack.className = 'front';
@@ -94,6 +95,7 @@ function generateBoard() {
         let tileBackImg = document.createElement('img');
         tileBackImg.src = `./img/tileback.png`;
         tileBackImg.alt = `Tile ${Tile.allTiles[i].tileId} Back`;
+        tileBackImg.className = 'tileImg';
 
         tileFront.appendChild(tileImg);
         tileBack.appendChild(tileBackImg);

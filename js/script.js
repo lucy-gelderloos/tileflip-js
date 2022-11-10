@@ -7,9 +7,9 @@
 //   x Script for handling reset if no match is found
 //   x Script for handling match found
 //   - Script for sending found matches to discard pile
-//   - Attempt counter
+//   - Attempt/score counter
 
-let difficulty, allTiles, tilesClicked = 0, firstTileId = 0, firstTileValue = 0, secondTileId = 0, secondTileValue = 0;
+let difficulty, allTiles, tilesClicked = 0, firstTileId = 0, firstTileValue = 0, secondTileId = 0, secondTileValue = 0, attempts;
 
 const info = document.getElementById('clickTracker');
 function tracker() {
@@ -30,9 +30,12 @@ function startNewGame(event) {
     event.preventDefault();
     generateTiles(difficulty);
     generateBoard();
+    attempts = 0;
 }
 
 const tileBoard = document.getElementById('tileBoard');
+const scoreboard = document.getElementById('scoreboard');
+const discardPile = document.getElementById('discardPile');
 
 class Tile {
     constructor(tileId, tileValue) {
@@ -44,6 +47,7 @@ class Tile {
 Tile.allTiles = [];
 
 function generateTiles(difficulty) {
+    // TODO: make ternary
     if(!difficulty) { difficulty = 16; }
     let tilesArray = [], k = 0;
     for(let i = 1; i <= difficulty / 2; i++) {
@@ -69,10 +73,6 @@ function generateTiles(difficulty) {
 }
 
 function generateBoard() {
-    // Consider: creating all 32 possible divs first, leave empty but with ID, then just change value/img when new game starts. Counterpoint: will divs havae a size, or will it be determined by the image?
-    while(tileBoard.firstChild) {
-        tileBoard.removeChild(tileBoard.firstChild);
-    }
     for(let i = 0; i < Tile.allTiles.length; i++) {
         let tileDiv = document.createElement('div');
         tileDiv.id = `tile${Tile.allTiles[i].tileId}`;
@@ -88,9 +88,13 @@ function generateBoard() {
         tileDiv.appendChild(tileImg);
         tileBoard.appendChild(tileDiv);        
     }
+
+    let discardImg = document.createElement('img');
+    discardImg.src = './img/matchFound.png';
+    discardImg.alt = 'Empty Discard Pile';
+    discardPile.appendChild(discardImg);
 }
 
-let timeout;
 function tileClick(tileId, tileValue) {
     let clickedTile = document.getElementById(`tile${tileId}`);
     if(!clickedTile.classList.contains('flipped') && !clickedTile.classList.contains('found')) {
@@ -106,11 +110,10 @@ function tileClick(tileId, tileValue) {
             if(firstTileValue == secondTileValue) { 
                 matchFound(); 
             } else { 
-                timeout = setTimeout(matchNotFound,3000); 
+                setTimeout(matchNotFound,3000);  
             }
         }
-    }
-    
+    }    
     tracker();
 }
 
@@ -136,6 +139,10 @@ function matchFound() {
     secondTileImg.src = `./img/matchfound.png`;
     secondTileImg.alt = `Match found!`;
 
+    let discardImg = discardPile.getElementsByTagName('img')[0];
+    discardImg.src = `./img/tileFaces/tile${firstTileValue}.png`;
+    discardImg.alt = 'Discard Pile';
+
     reset();
 }
 
@@ -150,7 +157,6 @@ function matchNotFound() {
             tile.classList.remove('flipped');
         }
     }
-
     reset();
 }
 

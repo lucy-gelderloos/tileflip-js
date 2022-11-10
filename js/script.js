@@ -6,21 +6,19 @@
 //   x Click handler for tiles to change image
 //   x Script for handling reset if no match is found
 //   x Script for handling match found
-//   - Script for sending found matches to discard pile
+//   x Script for sending found matches to discard pile
 //   - Attempt/score counter
 
 let difficulty, allTiles, tilesClicked = 0, firstTileId = 0, firstTileValue = 0, secondTileId = 0, secondTileValue = 0, attempts;
 
 const info = document.getElementById('clickTracker');
 function tracker() {
-    info.textContent = `firstTileId: ${firstTileId}; firstTileValue: ${firstTileValue}; secondTileId: ${secondTileId}; secondTileValue: ${secondTileValue}`;
+    info.textContent = `firstTileId: ${firstTileId}; firstTileValue: ${firstTileValue}; secondTileId: ${secondTileId}; secondTileValue: ${secondTileValue}; attempts: ${attempts}`;
 }
 
 const difficultySelect = document.getElementById('selectDifficultyDropdown');
 difficultySelect.addEventListener('change',function(event) {
     difficulty = event.target.value;
-    console.log('difficultySelect change listener event.target.value',event.target.value);
-    console.log('difficultySelect difficulty',difficulty);
 });
 
 const newGameBtn = document.getElementById('newGameBtn');
@@ -73,6 +71,10 @@ function generateTiles(difficulty) {
 }
 
 function generateBoard() {
+    while(tileBoard.firstChild) {
+        tileBoard.removeChild(tileBoard.firstChild);
+    }
+
     for(let i = 0; i < Tile.allTiles.length; i++) {
         let tileDiv = document.createElement('div');
         tileDiv.id = `tile${Tile.allTiles[i].tileId}`;
@@ -89,10 +91,16 @@ function generateBoard() {
         tileBoard.appendChild(tileDiv);        
     }
 
-    let discardImg = document.createElement('img');
-    discardImg.src = './img/matchFound.png';
-    discardImg.alt = 'Empty Discard Pile';
-    discardPile.appendChild(discardImg);
+    if(!discardPile.getElementsByTagName('img')[0]) {
+        let discardImg = document.createElement('img');
+        discardImg.src = './img/matchFound.png';
+        discardImg.alt = 'Empty Discard Pile';
+        discardPile.appendChild(discardImg);
+    } else {
+        let discardImg = discardPile.getElementsByTagName('img')[0];
+        discardImg.src = './img/matchFound.png';
+        discardImg.alt = 'Empty Discard Pile';
+    }
 }
 
 function tileClick(tileId, tileValue) {
@@ -106,6 +114,7 @@ function tileClick(tileId, tileValue) {
             secondTileId = tileId;
             secondTileValue = tileValue;
             flipTile(tileId, tileValue);
+            attempts++;
             // TODO: make ternary
             if(firstTileValue == secondTileValue) { 
                 matchFound(); 
@@ -147,16 +156,18 @@ function matchFound() {
 }
 
 function matchNotFound() {
-    let tiles = tileBoard.children;
-    for(let i = 0; i < tiles.length; i++) {
-        let tile = tiles[i];
-        if(tile.classList.contains('flipped')) {
-            let tileImg = tile.getElementsByTagName('img')[0];
-            tileImg.src = `./img/tileback.png`;
-            tileImg.alt = `Tile ${tile.tileId} Back`;
-            tile.classList.remove('flipped');
-        }
-    }
+    let firstTile = document.getElementById(`tile${firstTileId}`);
+    let firstTileImg = firstTile.getElementsByTagName('img')[0];
+    firstTileImg.src = `./img/tileback.png`;
+    firstTileImg.alt = `Tile ${firstTileId} Back`;
+    firstTile.classList.remove('flipped');
+    
+    let secondTile = document.getElementById(`tile${secondTileId}`);
+    let secondTileImg = secondTile.getElementsByTagName('img')[0];
+    secondTileImg.src = `./img/tileback.png`;
+    secondTileImg.alt = `Tile ${secondTileId} Back`;
+    secondTile.classList.remove('flipped');
+
     reset();
 }
 

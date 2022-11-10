@@ -49,10 +49,7 @@ footer {
     background-color: var(--yellow);
     grid-area: tileBoard;
     display: grid;
-    grid-template-columns: repeat(4,1fr);
-    grid-template-rows: repeat(4,1fr);
-    /* column-gap: 15px;
-    row-gap: 15px; */
+    grid-template-rows: auto;
     justify-items: center;
 }
 
@@ -72,10 +69,22 @@ footer {
     grid-area: discardPile;
 }
 
+.d8 {
+    grid-template-columns: repeat(4,1fr);
+}
+
+.d16 {
+    grid-template-columns: repeat(4,1fr);
+}
+
+.d36 {
+    grid-template-columns: repeat(6,1fr);
+}
+
 .tile {
     width: 100px;
     /* height: 140px; */
     background-color: var(--crimson);
-    padding: 15px;
-    margin: 15px;
+    padding: 5px;
+    margin: 5px;
 }

@@ -7,33 +7,34 @@
 //   x Script for handling reset if no match is found
 //   x Script for handling match found
 //   x Script for sending found matches to discard pile
-//   - Attempt/score counter
+//   x Attempt/score counter
+
+const info = document.getElementById('clickTracker');
+const difficultySelect = document.getElementById('selectDifficultyDropdown');
+const newGameBtn = document.getElementById('newGameBtn');
+const tileBoard = document.getElementById('tileBoard');
+const scoreboard = document.getElementById('scoreboard');
+const discardPile = document.getElementById('discardPile');
 
 let difficulty, allTiles, tilesClicked = 0, firstTileId = 0, firstTileValue = 0, secondTileId = 0, secondTileValue = 0, attempts, tilesLeft;
 
-const info = document.getElementById('clickTracker');
-function tracker() {
-    info.textContent = `firstTileId: ${firstTileId}; firstTileValue: ${firstTileValue}; secondTileId: ${secondTileId}; secondTileValue: ${secondTileValue}; attempts: ${attempts}`;
-}
-
-const difficultySelect = document.getElementById('selectDifficultyDropdown');
 difficultySelect.addEventListener('change',function(event) {
     difficulty = event.target.value;
 });
 
-const newGameBtn = document.getElementById('newGameBtn');
 newGameBtn.addEventListener('click',startNewGame)
+
+function tracker() {
+    info.textContent = `firstTileId: ${firstTileId}; firstTileValue: ${firstTileValue}; secondTileId: ${secondTileId}; secondTileValue: ${secondTileValue}; attempts: ${attempts}`;
+}
 
 function startNewGame(event) {
     event.preventDefault();
-    generateTiles(difficulty);
+    tileBoard.classList.remove('d8','d16','d36')
+    generateTiles();
     generateBoard();
     attempts = 0;
 }
-
-const tileBoard = document.getElementById('tileBoard');
-const scoreboard = document.getElementById('scoreboard');
-const discardPile = document.getElementById('discardPile');
 
 class Tile {
     constructor(tileId, tileValue) {
@@ -44,7 +45,7 @@ class Tile {
 }
 Tile.allTiles = [];
 
-function generateTiles(difficulty) {
+function generateTiles() {
     // TODO: make ternary
     if(!difficulty) { difficulty = 16; }
     tilesLeft = difficulty / 2;
@@ -76,6 +77,8 @@ function generateBoard() {
         tileBoard.removeChild(tileBoard.firstChild);
     }
 
+    tileBoard.classList.add(`d${difficulty}`);
+    
     for(let i = 0; i < Tile.allTiles.length; i++) {
         let tileDiv = document.createElement('div');
         tileDiv.id = `tile${Tile.allTiles[i].tileId}`;
@@ -119,9 +122,9 @@ function tileClick(tileId, tileValue) {
             attempts++;
             // TODO: make ternary
             if(firstTileValue == secondTileValue) { 
-                matchFound(); 
+                setTimeout(matchFound(),500); 
             } else { 
-                setTimeout(matchNotFound,2000);  
+                setTimeout(matchNotFound,1500);  
             }
         }
     }    

@@ -9,6 +9,12 @@
 //   x Script for sending found matches to discard pile
 //   x Attempt/score counter
 
+// For the flip animation, need:
+// - a container div ('tile')
+// - a flipper div ('flipper')
+// - a front div ('front')
+// - a back div ('back')
+
 const info = document.getElementById('clickTracker');
 const difficultySelect = document.getElementById('selectDifficultyDropdown');
 const newGameBtn = document.getElementById('newGameBtn');
@@ -85,11 +91,28 @@ function generateBoard() {
         tileDiv.className = 'tile';
         tileDiv.addEventListener('click', function(){ tileClick(Tile.allTiles[i].tileId, Tile.allTiles[i].tileValue); });
 
-        let tileImg = document.createElement('img');
-        tileImg.src = `./img/tileback.png`;
-        tileImg.alt = `Tile ${Tile.allTiles[i].tileId} Back`;
+        let tileFlipper = document.createElement('div');
+        tileFlipper.className = 'flipper';
 
-        tileDiv.appendChild(tileImg);
+        let tileFront = document.createElement('div');
+        tileFront.className = 'back';
+        
+        let tileImg = document.createElement('img');
+        tileImg.src = `./img/tileFaces/tile${Tile.allTiles[i].tileValue}.png`;
+        tileImg.alt = `Tile value: ${Tile.allTiles[i].tileValue}`;
+
+        let tileBack = document.createElement('div');
+        tileBack.className = 'front';
+
+        let tileBackImg = document.createElement('img');
+        tileBackImg.src = `./img/tileback.png`;
+        tileBackImg.alt = `Tile ${Tile.allTiles[i].tileId} Back`;
+
+        tileFront.appendChild(tileImg);
+        tileBack.appendChild(tileBackImg);
+        tileFlipper.appendChild(tileFront);
+        tileFlipper.appendChild(tileBack);
+        tileDiv.appendChild(tileFlipper);
         tileBoard.appendChild(tileDiv);        
     }
 
@@ -131,22 +154,26 @@ function tileClick(tileId, tileValue) {
 function flipTile(tileId, tileValue) {
     let clickedTile = document.getElementById(`tile${tileId}`);
     clickedTile.classList.add('flipped');
-    let tileImg = clickedTile.getElementsByTagName('img')[0];
-    tileImg.src = `./img/tileFaces/tile${tileValue}.png`;
-    tileImg.alt = `Tile ${tileValue}`;
+    // let tileImg = clickedTile.getElementsByTagName('img')[0];
+    // tileImg.src = `./img/tileFaces/tile${tileValue}.png`;
+    // tileImg.alt = `Tile ${tileValue}`;
 }
 
 function matchFound() {
     // TODO: is there a way to do this more efficiently?
     let firstTile = document.getElementById(`tile${firstTileId}`);
     firstTile.classList.replace('flipped','found');
-    let firstTileImg = firstTile.getElementsByTagName('img')[0];
+    let firstFlipper = firstTile.getElementsByClassName('flipper')[0];
+    let firstBack = firstFlipper.getElementsByClassName('front')[0];
+    let firstTileImg = firstBack.getElementsByTagName('img')[0];
     firstTileImg.src = `./img/matchfound.png`;
     firstTileImg.alt = `Match found!`;
     
     let secondTile = document.getElementById(`tile${secondTileId}`);
     secondTile.classList.replace('flipped','found');
-    let secondTileImg = secondTile.getElementsByTagName('img')[0];
+    let secondFlipper = secondTile.getElementsByClassName('flipper')[0];
+    let secondBack = secondFlipper.getElementsByClassName('front')[0];
+    let secondTileImg = secondBack.getElementsByTagName('img')[0];
     secondTileImg.src = `./img/matchfound.png`;
     secondTileImg.alt = `Match found!`;
 
@@ -164,15 +191,15 @@ function matchFound() {
 
 function matchNotFound() {
     let firstTile = document.getElementById(`tile${firstTileId}`);
-    let firstTileImg = firstTile.getElementsByTagName('img')[0];
-    firstTileImg.src = `./img/tileback.png`;
-    firstTileImg.alt = `Tile ${firstTileId} Back`;
+    // let firstTileImg = firstTile.getElementsByTagName('img')[0];
+    // firstTileImg.src = `./img/tileback.png`;
+    // firstTileImg.alt = `Tile ${firstTileId} Back`;
     firstTile.classList.remove('flipped');
     
     let secondTile = document.getElementById(`tile${secondTileId}`);
-    let secondTileImg = secondTile.getElementsByTagName('img')[0];
-    secondTileImg.src = `./img/tileback.png`;
-    secondTileImg.alt = `Tile ${secondTileId} Back`;
+    // let secondTileImg = secondTile.getElementsByTagName('img')[0];
+    // secondTileImg.src = `./img/tileback.png`;
+    // secondTileImg.alt = `Tile ${secondTileId} Back`;
     secondTile.classList.remove('flipped');
 
     reset();

@@ -1,7 +1,8 @@
 @import "reset.css";
 
 :root {
-    --pageColor: #FFCC03; /* header, footer */
+    --pageColor: #FFCC03; /* header, footer, new game button */
+    --pageColorAccentLight: #ffeca2; /* new game button shadow, new game button hover, new game button click */
     --pageText: #181300; /* header & footer text */
     --tileBoardColor: #5593F2;
     --tileBoardAccentLight: #7ba4e0;
@@ -13,6 +14,7 @@
     --discardPileColor: #6A55F2;
     --discardPileAccentLight: #a195f0;
     --periwinkle: #5869DB;
+    --yellow: #FFCC03;
     --orange: #F27405; 
     --scarlet: #C82600;
     --magenta: #E63964;
@@ -47,7 +49,7 @@ main {
     margin: auto;
     min-width: 750px;
     display: grid;
-    grid-template-columns: auto 200px;
+    grid-template-columns: auto 300px;
     grid-template-rows: auto;
     grid-template-areas:
      "tileBoard gameSettings"
@@ -83,23 +85,73 @@ footer {
     padding: 5px 10px;
 }
 
+#selectDifficulty {
+    background-color: white;
+    width: fit-content;
+    margin: 15px auto;
+    border-radius: 3px;
+    box-shadow: inset 0 0 5px black;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: auto;
+}
+
 #selectDifficulty [type='radio'] {
-    display: none; 
+    display: none;
 }
 
 #selectDifficulty label {
-    margin: 3px;
+    /* margin: 3px; */
+    padding: 8px;
+    display: inline-block;
+    text-align: center;
+    font-weight: 700;
 }
 
-#selectDifficulty input {
+/* #selectDifficulty input {
     margin-left:0 !important;
     margin-right:0 !important;
     border-radius:0;
-}
+} */
 
 #selectDifficulty input:checked+label {
-    border: 1px solid #b33683 !important;
-    box-shadow: 0 0 0 0.2rem #de3ea180 !important;
+    box-shadow: 0 0 0 5px #444, inset 0 0 0 3px #444, 5px 5px 2px #444 !important;
+}
+
+/* #easyRadio:checked+label {
+    background-color: var(--yellow);
+}
+
+#mediumRadio:checked+label {
+    background-color: var(--orange);
+}
+
+#hardRadio:checked+label {
+    background-color: var(--scarlet);
+} */
+
+#newGameBtn {
+    margin: 25px auto;
+    background-color: var(--pageColor);
+    color: var(--pageText);
+    font-weight: 700;
+    box-shadow: var(--boardShadowSize) var(--pageColorAccentLight);
+    width: fit-content; 
+    padding: 5px;
+    border-radius: 3px;
+}
+
+#newGameBtn:hover {
+    background-color: var(--pageColorAccentLight);
+    cursor: pointer;
+}
+
+#newGameBtn:active {
+    background-color: var(--pageColorAccentLight);
+    cursor: pointer;
+    box-shadow: none;
+    transform: translate(2px, 2px);
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 #scoreboard {
@@ -110,7 +162,7 @@ footer {
 }
 
 #discardPileDiv {
-    min-height: 100px;
+    padding: 20px;
     background-color: var(--discardPileColor);
     box-shadow: var(--boardShadowSize) var(--discardPileAccentLight), var(--grayShadow);
     grid-area: discardPile;
@@ -160,7 +212,6 @@ footer {
 /* https://davidwalsh.name/css-flip */
 /* TODO: webkit prefixes */
 .tile {
-    /* background-color: var(--crimson); */
     padding: 5px;
     margin: 5px;
     perspective: 1000px;
@@ -204,3 +255,5 @@ footer {
     border-radius: 5px;
     box-shadow: 1px 1px 0 1px #ddd;
 }
+
+

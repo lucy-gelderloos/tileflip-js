@@ -80,6 +80,26 @@ footer {
     background-color: var(--settingsColor);
     box-shadow: var(--boardShadowSize) var(--settingsAccentLight), var(--grayShadow);
     color: var(--settingsText);
+    padding: 5px 10px;
+}
+
+#selectDifficulty [type='radio'] {
+    display: none; 
+}
+
+#selectDifficulty label {
+    margin: 3px;
+}
+
+#selectDifficulty input {
+    margin-left:0 !important;
+    margin-right:0 !important;
+    border-radius:0;
+}
+
+#selectDifficulty input:checked+label {
+    border: 1px solid #b33683 !important;
+    box-shadow: 0 0 0 0.2rem #de3ea180 !important;
 }
 
 #scoreboard {

@@ -113,7 +113,6 @@ function generateBoard() {
         tileDiv.appendChild(tileFlipper);
         tileBoard.appendChild(tileDiv);        
     }
-
 }
 
 function tileClick(tileId, tileValue) {

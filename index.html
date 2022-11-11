@@ -19,27 +19,18 @@
       </div>
       <div id="gameSettings">
         <p id="clickTracker"></p>
-        <form id="selectDifficultyForm">
-
-          <label for="selectDifficulty">Select Difficulty</label>
-          <select name="difficulty" id="selectDifficultyDropdown">
-            <option value="8">Easy</option>
-            <option value="16">Medium</option>
-            <option value="36">Hard</option>
-          </select>
-
-          <input type="radio" name="difficultyRadio" id="easyRadio" value="8" />
+        <div id="selectDifficulty">
+          <input type="radio" name="difficultyRadio" class="difficultyRadio" id="easyRadio" value="8" />
           <label for="easyRadio">Easy</label>
 
-          <input type="radio" name="difficultyRadio" id="mediumRadio" value="16" checked/>
+          <input type="radio" name="difficultyRadio" class="difficultyRadio" id="mediumRadio" value="16" checked/>
           <label for="mediumRadio">Medium</label>
 
-          <input type="radio" name="difficultyRadio" id="hardRadio" value="36" />
+          <input type="radio" name="difficultyRadio" class="difficultyRadio" id="hardRadio" value="36" />
           <label for="hardRadio">Hard</label>
-
-
-
-        </form>
+          <div id="toggle_option_slider">
+          </div>
+        </div>
         <button id="newGameBtn">New Game</button>
       </div>
       <div id="scoreboard">

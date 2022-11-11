@@ -6,23 +6,29 @@ const newGameBtn = document.getElementById('newGameBtn');
 const tileBoard = document.getElementById('tileBoard');
 const scoreboard = document.getElementById('scoreboard');
 const discardPile = document.getElementById('discardPile');
+const settingsDiv = document.getElementById('gameSettings');
+const easyRadio = document.getElementById('easyRadio');
+const mediumRadio = document.getElementById('mediumRadio');
+const hardRadio = document.getElementById('hardRadio');
 
 let difficulty, allTiles, firstTileId = 0, firstTileValue = 0, secondTileId = 0, secondTileValue = 0, attempts, tilesLeft;
-
-difficultySelect.addEventListener('change',function(event) {
-    difficulty = event.target.value;
-});
 
 newGameBtn.addEventListener('click',startNewGame)
 
 function tracker() {
-    info.textContent = `attempts: ${attempts}`;
+    info.textContent = `difficulty: ${difficulty}; attempts: ${attempts}`;
 }
+
+easyRadio.addEventListener('change',function(event) { difficulty = event.target.value });
+
+mediumRadio.addEventListener('change',function(event) { difficulty = event.target.value });
+
+hardRadio.addEventListener('change',function(event) { difficulty = event.target.value });
 
 function startNewGame(event) {
     event.preventDefault();
     tileBoard.classList.remove('d8','d16','d36');
-    if(discardPile.getElementsByTagName('img')) {
+    if(discardPile.firstChild) {
         discardPile.removeChild(discardPile.firstChild);
     }
     generateTiles();

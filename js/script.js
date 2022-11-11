@@ -21,7 +21,10 @@ function tracker() {
 
 function startNewGame(event) {
     event.preventDefault();
-    tileBoard.classList.remove('d8','d16','d36')
+    tileBoard.classList.remove('d8','d16','d36');
+    if(discardPile.getElementsByTagName('img')) {
+        discardPile.removeChild(discardPile.firstChild);
+    }
     generateTiles();
     generateBoard();
     attempts = 0;
@@ -105,16 +108,6 @@ function generateBoard() {
         tileBoard.appendChild(tileDiv);        
     }
 
-    if(!discardPile.getElementsByTagName('img')[0]) {
-        let discardImg = document.createElement('img');
-        discardImg.src = './img/matchFound.png';
-        discardImg.alt = 'Empty Discard Pile';
-        discardPile.appendChild(discardImg);
-    } else {
-        let discardImg = discardPile.getElementsByTagName('img')[0];
-        discardImg.src = './img/matchFound.png';
-        discardImg.alt = 'Empty Discard Pile';
-    }
 }
 
 function tileClick(tileId, tileValue) {
@@ -163,7 +156,13 @@ function matchFound() {
     secondTileImg.src = `./img/matchfound.png`;
     secondTileImg.alt = `Match found!`;
 
-    let discardImg = discardPile.getElementsByTagName('img')[0];
+    let discardImg;
+    if(!discardPile.getElementsByTagName('img')[0]) {
+        discardImg = document.createElement('img');
+        discardPile.appendChild(discardImg);
+    } else {
+        discardImg = discardPile.getElementsByTagName('img')[0];
+    }
     discardImg.src = `./img/tileFaces/tile${firstTileValue}.png`;
     discardImg.alt = 'Discard Pile';
 

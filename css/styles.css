@@ -79,6 +79,7 @@ footer {
 #gameSettings {
     background-color: var(--settingsColor);
     box-shadow: var(--boardShadowSize) var(--settingsAccentLight), var(--grayShadow);
+    color: var(--settingsText);
 }
 
 #scoreboard {
@@ -88,11 +89,37 @@ footer {
     grid-area: scoreboard;
 }
 
-#discardPile {
-    min-width: 100px;
+#discardPileDiv {
+    min-height: 100px;
     background-color: var(--discardPileColor);
     box-shadow: var(--boardShadowSize) var(--discardPileAccentLight), var(--grayShadow);
     grid-area: discardPile;
+    display: flex;
+    align-items: center;
+}
+
+#discardPileBorder {
+    width: fit-content;
+    background-color: var(--discardPileColor);
+    margin: auto;
+    padding: 5px;
+    border: 5px dashed var(--discardPileAccentLight);
+}
+
+#discardPile {
+    min-width: 75px;
+    min-height: 100px;
+    width: fit-content;
+    background-color: var(--discardPileAccentLight);
+    margin: auto;
+    padding: 5px;
+}
+
+#discardPile img {
+    box-shadow: 1px 1px 0 1px #ddd, 2px 2px 4px black;
+    border-radius: 5px;
+    width: var(--tileWidth);
+    height: var(--tileHeight);
 }
 
 .d8 {
@@ -140,6 +167,7 @@ footer {
     top: 0;
     left: 0;
     box-shadow: 2px 2px 4px black;
+    border-radius: 5px;
 }
   
 .front {
@@ -153,4 +181,6 @@ footer {
 
 .tileImg {
     width: var(--tileWidth);
+    border-radius: 5px;
+    box-shadow: 1px 1px 0 1px #ddd;
 }

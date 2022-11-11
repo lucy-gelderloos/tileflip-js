@@ -27,7 +27,7 @@ hardRadio.addEventListener('change',function(event) { difficulty = event.target.
 
 function startNewGame(event) {
     event.preventDefault();
-    tileBoard.classList.remove('d8','d16','d36');
+    tileBoard.classList.remove('d16','d24','d36');
     if(discardPile.firstChild) {
         discardPile.removeChild(discardPile.firstChild);
     }
@@ -47,7 +47,7 @@ Tile.allTiles = [];
 
 function generateTiles() {
     // TODO: make ternary
-    if(!difficulty) { difficulty = 16; }
+    if(!difficulty) { difficulty = 24; }
     tilesLeft = difficulty / 2;
     let tilesArray = [], k = 0;
     for(let i = 1; i <= difficulty / 2; i++) {

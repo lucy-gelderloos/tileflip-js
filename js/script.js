@@ -11,12 +11,13 @@ const settingsDiv = document.getElementById('gameSettings');
 const easyRadio = document.getElementById('easyRadio');
 const mediumRadio = document.getElementById('mediumRadio');
 const hardRadio = document.getElementById('hardRadio');
+const easyMatchPoint = 50;
+const medMatchPoint = 75;
+const hardMatchPoint = 100;
+const noMatchPenalty = -10;
+const maxTiles = 18;
 
 let difficulty, allTiles, firstTileId = 0, firstTileValue = 0, secondTileId = 0, secondTileValue = 0, attempts, matchesLeft, score = 0;
-let easyMatchPoint = 50;
-let medMatchPoint = 75;
-let hardMatchPoint = 100;
-let noMatchPenalty = -10;
 
 easyRadio.addEventListener('change',function(event) { difficulty = event.target.value });
 mediumRadio.addEventListener('change',function(event) { difficulty = event.target.value });
@@ -24,31 +25,10 @@ hardRadio.addEventListener('change',function(event) { difficulty = event.target.
 
 newGameBtn.addEventListener('click',startNewGame);
 
-function calculateScore() {
-    let points;
-    switch(difficulty) {
-        case "16":{
-            points = easyMatchPoint;
-            break;
-        }
-        case "24":{
-            points = medMatchPoint;
-            break;
-        }
-        case "36":{
-            points = hardMatchPoint
-            break;
-        }
-        default:{
-            points = medMatchPoint;
-        }
-    }
-    score = (((difficulty / 2) - matchesLeft) * points) + (attempts * noMatchPenalty);
-    scorep.textContent = `${score}`;
-}
-
 function startNewGame(event) {
     event.preventDefault();
+    if(!difficulty) { difficulty = 24; }
+    matchesLeft = difficulty / 2;
     tileBoard.classList.remove('d16','d24','d36');
     if(discardPile.firstChild) {
         discardPile.removeChild(discardPile.firstChild);
@@ -69,15 +49,20 @@ class Tile {
 Tile.allTiles = [];
 
 function generateTiles() {
-    // TODO: make ternary
-    if(!difficulty) { difficulty = 24; }
-    matchesLeft = difficulty / 2;
+    let valuesArr = [];
+    for(let i = 0; i < maxTiles; i++) {
+        valuesArr[i] = [i];
+    }
+
     let tilesArray = [], k = 0;
-    for(let i = 1; i <= difficulty / 2; i++) {
-        tilesArray[k] = i;
+
+    for(let i = 0; i < difficulty / 2; i++) {
+        let randIndex = Math.floor(Math.random() * valuesArr.length);
+        tilesArray[k] = valuesArr[randIndex];
         k++;
-        tilesArray[k] = i;
+        tilesArray[k] = valuesArr[randIndex];
         k++;
+        valuesArr.splice(randIndex,1);
     }
 
     // https://bost.ocks.org/mike/shuffle/
@@ -136,6 +121,29 @@ function generateBoard() {
         tileDiv.appendChild(tileFlipper);
         tileBoard.appendChild(tileDiv);        
     }
+}
+
+function calculateScore() {
+    let points;
+    switch(difficulty) {
+        case "16":{
+            points = easyMatchPoint;
+            break;
+        }
+        case "24":{
+            points = medMatchPoint;
+            break;
+        }
+        case "36":{
+            points = hardMatchPoint
+            break;
+        }
+        default:{
+            points = medMatchPoint;
+        }
+    }
+    score = (((difficulty / 2) - matchesLeft) * points) + (attempts * noMatchPenalty);
+    scorep.textContent = `${score}`;
 }
 
 function tileClick(tileId, tileValue) {

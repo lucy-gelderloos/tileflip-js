@@ -5,13 +5,18 @@ const difficultySelect = document.getElementById('selectDifficultyDropdown');
 const newGameBtn = document.getElementById('newGameBtn');
 const tileBoard = document.getElementById('tileBoard');
 const scoreboard = document.getElementById('scoreboard');
+const scoreDiv = document.getElementById('scoreDiv');
 const discardPile = document.getElementById('discardPile');
 const settingsDiv = document.getElementById('gameSettings');
 const easyRadio = document.getElementById('easyRadio');
 const mediumRadio = document.getElementById('mediumRadio');
 const hardRadio = document.getElementById('hardRadio');
 
-let difficulty, allTiles, firstTileId = 0, firstTileValue = 0, secondTileId = 0, secondTileValue = 0, attempts, tilesLeft;
+let difficulty, allTiles, firstTileId = 0, firstTileValue = 0, secondTileId = 0, secondTileValue = 0, attempts, matchesLeft;
+let easyMatchPoint = 50;
+let medMatchPoint = 75;
+let hardMatchPoint = 100;
+let noMatchPenalty = -10;
 
 newGameBtn.addEventListener('click',startNewGame)
 
@@ -20,10 +25,31 @@ function tracker() {
 }
 
 easyRadio.addEventListener('change',function(event) { difficulty = event.target.value });
-
 mediumRadio.addEventListener('change',function(event) { difficulty = event.target.value });
-
 hardRadio.addEventListener('change',function(event) { difficulty = event.target.value });
+
+function calculateScore() {
+    let points, score;
+    switch(difficulty) {
+        case 16:{
+            points = easyMatchPoint;
+            break;
+        }
+        case 24:{
+            points = medMatchPoint;
+            break;
+        }
+        case 36:{
+            points = hardMatchPoint
+            break;
+        }
+        default:{
+            points = medMatchPoint;
+        }
+    }
+    score = (((difficulty / 2) - matchesLeft) * points) + (attempts * noMatchPenalty);
+    scoreDiv.textContent = `Score: ${score}`;
+}
 
 function startNewGame(event) {
     event.preventDefault();
@@ -34,6 +60,7 @@ function startNewGame(event) {
     generateTiles();
     generateBoard();
     attempts = 0;
+    calculateScore();
 }
 
 class Tile {
@@ -48,7 +75,7 @@ Tile.allTiles = [];
 function generateTiles() {
     // TODO: make ternary
     if(!difficulty) { difficulty = 24; }
-    tilesLeft = difficulty / 2;
+    matchesLeft = difficulty / 2;
     let tilesArray = [], k = 0;
     for(let i = 1; i <= difficulty / 2; i++) {
         tilesArray[k] = i;
@@ -134,11 +161,11 @@ function tileClick(tileId, tileValue) {
                 setTimeout(matchNotFound,1500);  
             }
         }
-    }    
+    }  
     tracker();
 }
 
-function flipTile(tileId, tileValue) {
+function flipTile(tileId) {
     let clickedTile = document.getElementById(`tile${tileId}`);
     clickedTile.classList.add('flipped');
 }
@@ -171,8 +198,8 @@ function matchFound() {
     discardImg.src = `./img/tileFaces/tile${firstTileValue}.png`;
     discardImg.alt = 'Discard Pile';
 
-    tilesLeft--;
-    if(tilesLeft == 0) {
+    matchesLeft--;
+    if(matchesLeft == 0) {
         alert(`All matches found in ${attempts} tries!`);
     }
 
@@ -194,5 +221,7 @@ function reset() {
     firstTileValue = 0;
     secondTileId = 0;
     secondTileValue = 0;
+    calculateScore();
     tracker();
 }
+

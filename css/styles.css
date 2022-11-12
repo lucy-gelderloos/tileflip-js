@@ -48,6 +48,7 @@ h3 {
 header {
     /* width: 100%; */
     background-color: var(--pageColor);
+    /* display: flex; */
 }
 
 main {
@@ -71,6 +72,12 @@ main > * {
 footer {
     width: 100%;
     background-color: var(--pageColor);
+}
+
+#headerTilesDiv {
+    display: grid;
+    grid-template-columns: repeat(9,1fr);
+    grid-template-rows: 125px;
 }
 
 #tileBoard {
@@ -252,6 +259,16 @@ footer {
     perspective: 1000px;
 }
 
+.headerTile:hover .flipper {
+    transform: rotateY(180deg);
+
+}
+
+.headerTileText {
+    font-size: 3em;
+    font-weight: 900;
+}
+
 .tile.flipped .flipper {
     transform: rotateY(180deg);
 }
@@ -272,13 +289,20 @@ footer {
     position: absolute;
     top: 0;
     left: 0;
-    box-shadow: 2px 2px 4px black;
-    border-radius: 5px;
+    box-shadow: 1px 1px 0 1px #ddd, 2px 2px 4px black;
+    border-radius: 5px; 
 }
   
 .front {
     z-index: 2;
     transform: rotateY(0deg);
+}
+
+.headerFront {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
   
 .back {
@@ -288,7 +312,6 @@ footer {
 .tileImg {
     width: var(--tileWidth);
     border-radius: 5px;
-    box-shadow: 1px 1px 0 1px #ddd;
 }
 
 

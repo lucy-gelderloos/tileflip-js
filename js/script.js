@@ -50,8 +50,8 @@ Tile.allTiles = [];
 
 function generateTiles() {
     let valuesArr = [];
-    for(let i = 1; i <= maxTiles; i++) {
-        valuesArr[i] = i;
+    for(let i = 0; i < maxTiles; i++) {
+        valuesArr[i] = i + 1;
     }
 
     let tilesArray = [], k = 0;

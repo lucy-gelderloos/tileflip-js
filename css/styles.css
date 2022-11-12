@@ -40,14 +40,19 @@ h2 {
     font-size: 2em;
 }
 
+h3 {
+    font-weight: 700;
+    font-size: 1.3em;
+}
+
 header {
-    width: 100%;
+    /* width: 100%; */
     background-color: var(--pageColor);
 }
 
 main {
     margin: auto;
-    min-width: 750px;
+    /* min-width: 750px; */
     display: grid;
     grid-template-columns: auto 300px;
     grid-template-rows: auto;
@@ -69,7 +74,7 @@ footer {
 }
 
 #tileBoard {
-    min-width: 500px;
+    width: 750px;
     background-color: var(--tileBoardColor);
     box-shadow: var(--boardShadowSize) var(--tileBoardAccentLight), var(--grayShadow);
 
@@ -152,6 +157,38 @@ footer {
     background-color: var(--scoreBoardColor);
     box-shadow: var(--boardShadowSize) var(--scoreboardAccentLight), var(--grayShadow);
     grid-area: scoreboard;
+    text-align: center;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+}
+
+#scoreHighlight {
+    background-color: var(--scoreboardAccentLight);
+    width: var(--tileWidth);
+    height: var(--tileHeight);
+    border: 15px solid var(--scoreboardAccentLight);
+    border-radius: 5px;
+    margin: auto;
+}
+
+#scoreDiv {
+    background-color: white;
+    box-shadow: inset 0 0 5px black;
+    text-align: center;
+    padding: 20px;
+    margin: 10px auto;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#scoreDiv p {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: 700;
 }
 
 #discardPileDiv {

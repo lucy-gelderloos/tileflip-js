@@ -5,41 +5,37 @@ const difficultySelect = document.getElementById('selectDifficultyDropdown');
 const newGameBtn = document.getElementById('newGameBtn');
 const tileBoard = document.getElementById('tileBoard');
 const scoreboard = document.getElementById('scoreboard');
-const scoreDiv = document.getElementById('scoreDiv');
+const scorep = document.getElementById('scorep');
 const discardPile = document.getElementById('discardPile');
 const settingsDiv = document.getElementById('gameSettings');
 const easyRadio = document.getElementById('easyRadio');
 const mediumRadio = document.getElementById('mediumRadio');
 const hardRadio = document.getElementById('hardRadio');
 
-let difficulty, allTiles, firstTileId = 0, firstTileValue = 0, secondTileId = 0, secondTileValue = 0, attempts, matchesLeft;
+let difficulty, allTiles, firstTileId = 0, firstTileValue = 0, secondTileId = 0, secondTileValue = 0, attempts, matchesLeft, score = 0;
 let easyMatchPoint = 50;
 let medMatchPoint = 75;
 let hardMatchPoint = 100;
 let noMatchPenalty = -10;
 
-newGameBtn.addEventListener('click',startNewGame)
-
-function tracker() {
-    info.textContent = `difficulty: ${difficulty}; attempts: ${attempts}`;
-}
-
 easyRadio.addEventListener('change',function(event) { difficulty = event.target.value });
 mediumRadio.addEventListener('change',function(event) { difficulty = event.target.value });
 hardRadio.addEventListener('change',function(event) { difficulty = event.target.value });
 
+newGameBtn.addEventListener('click',startNewGame);
+
 function calculateScore() {
-    let points, score;
+    let points;
     switch(difficulty) {
-        case 16:{
+        case "16":{
             points = easyMatchPoint;
             break;
         }
-        case 24:{
+        case "24":{
             points = medMatchPoint;
             break;
         }
-        case 36:{
+        case "36":{
             points = hardMatchPoint
             break;
         }
@@ -48,7 +44,7 @@ function calculateScore() {
         }
     }
     score = (((difficulty / 2) - matchesLeft) * points) + (attempts * noMatchPenalty);
-    scoreDiv.textContent = `Score: ${score}`;
+    scorep.textContent = `${score}`;
 }
 
 function startNewGame(event) {
@@ -153,16 +149,15 @@ function tileClick(tileId, tileValue) {
             secondTileId = tileId;
             secondTileValue = tileValue;
             flipTile(tileId, tileValue);
-            attempts++;
             // TODO: make ternary
             if(firstTileValue == secondTileValue) { 
                 setTimeout(matchFound,500); 
             } else { 
-                setTimeout(matchNotFound,1500);  
+                setTimeout(matchNotFound,1500);
+                attempts++;
             }
         }
     }  
-    tracker();
 }
 
 function flipTile(tileId) {
@@ -222,6 +217,4 @@ function reset() {
     secondTileId = 0;
     secondTileValue = 0;
     calculateScore();
-    tracker();
 }
-
